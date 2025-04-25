@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Cobros PEGASUS - Login</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div id="login-page">
+        <div class="login-box">
+            <h2>Iniciar Sesión</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="username">Usuario / Correo Electrónico</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="form-group radio-group">
+                    <div>
+                         <input type="radio" id="role-admin" name="login-role" value="admin" checked>
+                         <label for="role-admin">Administrador</label>
+                    </div>
+                     <div>
+                         <input type="radio" id="role-user" name="login-role" value="user">
+                         <label for="role-user">Usuario</label>
+                    </div>
+                </div>
+                <button type="submit" class="primary-btn login-btn">Ingresar</button>
+                <p id="login-error-message" class="login-error">Usuario o contraseña incorrectos.</p>
+            </form>
+        </div>
+    </div>
+
+    <div class="app-container" style="display: none;">
+        <aside class="sidebar">
+            <div class="logo-container">
+                <img src="/img/logo.svg" alt="PEGASUS Logo" id="logo-image" class="logo">
+                <h2>PEGASUS</h2>
+            </div>
+            <nav class="nav-menu">
+                <ul>
+                    <li class="active" data-page="dashboard"><i class="fas fa-home"></i> <span>Dashboard</span></li>
+                    <li data-page="clients"><i class="fas fa-users"></i> <span>Clientes</span></li>
+                    <li data-page="payments"><i class="fas fa-money-bill-wave"></i> <span>Cobros</span></li>
+                    <li data-page="services"><i class="fas fa-boxes"></i> <span>Servicios</span></li>
+                    <li data-page="reports"><i class="fas fa-chart-bar"></i> <span>Reportes</span></li>
+                    <li data-page="settings"><i class="fas fa-cog"></i> <span>Configuración</span></li>
+                </ul>
+            </nav>
+            <div class="user-info-container">
+                 <div class="user-info">
+                    <div class="user-avatar">A</div>
+                    <div>
+                        <p class="user-name" id="logged-in-user-name">Admin</p> <p class="user-role" id="logged-in-user-role">Administrador</p> </div>
+                </div>
+                <button id="logout-btn" class="logout-btn"><i class="fas fa-sign-out-alt"></i> <span>Salir</span></button> </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-bar">
+                <div class="search-container">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Buscar cliente, factura, servicio..." id="search-input">
+                </div>
+                <div class="top-bar-actions">
+                    <button id="notifications-btn" class="icon-btn"><i class="fas fa-bell"></i><span class="notification-badge">3</span></button>
+                    <button id="add-client-btn" class="primary-btn"><i class="fas fa-plus"></i> Nuevo Cliente</button>
+                </div>
+            </header>
+
+            <section id="dashboard" class="page active">
+                <div class="page-header">
+                    <h1>Dashboard</h1>
+                    <p class="date" id="current-date">Lunes, 7 de Abril de 2025</p>
+                </div>
+
+                <div class="stats-container">
+                    <div class="stat-card">
+                        <div class="stat-icon clients-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3>Total Clientes</h3>
+                            <p class="stat-value">152</p>
+                            <p class="stat-growth positive">+12% <span>último mes</span></p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon payments-icon">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3>Ingresos Mensuales</h3>
+                            <p class="stat-value">S/15,400.00</p>
+                            <p class="stat-growth positive">+8% <span>último mes</span></p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon pending-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3>Pagos Pendientes</h3>
+                            <p class="stat-value">27</p>
+                            <p class="stat-growth negative">+4% <span>último mes</span></p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon overdue-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3>Pagos Atrasados</h3>
+                            <p class="stat-value">14</p>
+                            <p class="stat-growth negative">+2% <span>último mes</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-content">
+                    <div class="alerts-section">
+                        <div class="section-header">
+                            <h2>Alertas Recientes</h2>
+                            <button class="see-all-btn" data-page-target="payments">Ver todas</button> </div>
+                        <div class="alerts-list">
+                            <div class="alert-item urgent">
+                                <div class="alert-icon"><i class="fas fa-exclamation-circle"></i></div>
+                                <div class="alert-content">
+                                    <h4>Pago Atrasado (30+ días)</h4>
+                                    <p>Transportes San Mateo - Servicio de Monitoreo GPS</p>
+                                </div>
+                                <div class="alert-actions">
+                                     <button class="contact-btn remind-btn"><i class="fab fa-whatsapp"></i> Contactar</button> <span class="alert-time">2 horas atrás</span>
+                                </div>
+                            </div>
+                            <div class="alert-item warning">
+                                <div class="alert-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                                <div class="alert-content">
+                                    <h4>Pago Próximo a Vencer</h4>
+                                    <p>Logística Express - Servicio de Mantenimiento</p>
+                                </div>
+                                <div class="alert-actions">
+                                     <button class="contact-btn remind-btn"><i class="fab fa-whatsapp"></i> Recordar</button> <span class="alert-time">5 horas atrás</span>
+                                </div>
+                            </div>
+                            <div class="alert-item info">
+                                <div class="alert-icon"><i class="fas fa-info-circle"></i></div>
+                                <div class="alert-content">
+                                    <h4>Nuevo Cliente Registrado</h4>
+                                    <p>Distribuidora Central - Servicio de Consultoría</p>
+                                </div>
+                                <div class="alert-actions">
+                                     <button class="view-btn" data-page-target="clients">Ver Detalles</button> <span class="alert-time">1 día atrás</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="recent-payments-section">
+                        <div class="section-header">
+                            <h2>Pagos Recientes</h2>
+                            <button class="see-all-btn" data-page-target="payments">Ver todos</button> </div>
+                        <div class="table-container">
+                            <table class="payments-table">
+                                <thead>
+                                    <tr>
+                                        <th>Cliente</th>
+                                        <th>Servicio</th>
+                                        <th>Fecha</th>
+                                        <th>Monto</th>
+                                        <th>Estado</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="client-info">
+                                                <div class="client-initial">C</div>
+                                                <span>Comercial Andina</span>
+                                            </div>
+                                        </td>
+                                        <td>Monitoreo GPS</td>
+                                        <td>05/04/2025</td>
+                                        <td>S/800.00</td>
+                                        <td><span class="status-badge paid">Pagado</span></td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                 <button class="icon-action view-btn" title="Ver detalles"><i class="fas fa-eye"></i></button> <button class="icon-action receipt-btn" title="Generar recibo"><i class="fas fa-file-invoice"></i></button> <button class="icon-action thank-btn" title="Enviar agradecimiento"><i class="fas fa-heart"></i></button> </div>
+                                        </td>
+                                    </tr>
+                                     <tr>
+                                        <td>
+                                            <div class="client-info">
+                                                <div class="client-initial">T</div>
+                                                <span>Transportes San Mateo</span>
+                                            </div>
+                                        </td>
+                                        <td>Monitoreo GPS</td>
+                                        <td>03/04/2025</td>
+                                        <td>S/1,600.00</td>
+                                        <td><span class="status-badge pending">Pendiente</span></td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                 <button class="icon-action view-btn" title="Ver detalles"><i class="fas fa-eye"></i></button> <button class="icon-action remind-btn" title="Enviar recordatorio"><i class="fab fa-whatsapp"></i></button> <button class="icon-action edit-btn" title="Editar"><i class="fas fa-edit"></i></button> </div>
+                                        </td>
+                                    </tr>
+                                     <tr>
+                                        <td>
+                                            <div class="client-info">
+                                                <div class="client-initial">L</div>
+                                                <span>Logística Express</span>
+                                            </div>
+                                        </td>
+                                        <td>Mantenimiento</td>
+                                        <td>02/04/2025</td>
+                                        <td>S/1,200.00</td>
+                                        <td><span class="status-badge overdue">Atrasado</span></td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                 <button class="icon-action view-btn" title="Ver detalles"><i class="fas fa-eye"></i></button> <button class="icon-action remind-btn" title="Enviar recordatorio"><i class="fab fa-whatsapp"></i></button> <button class="icon-action edit-btn" title="Editar"><i class="fas fa-edit"></i></button> </div>
+                                        </td>
+                                    </tr>
+                                     <tr>
+                                        <td>
+                                            <div class="client-info">
+                                                <div class="client-initial">D</div>
+                                                <span>Distribuidora Central</span>
+                                            </div>
+                                        </td>
+                                        <td>Consultoría</td>
+                                        <td>01/04/2025</td>
+                                        <td>S/2,000.00</td>
+                                        <td><span class="status-badge paid">Pagado</span></td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                 <button class="icon-action view-btn" title="Ver detalles"><i class="fas fa-eye"></i></button> <button class="icon-action receipt-btn" title="Generar recibo"><i class="fas fa-file-invoice"></i></button> <button class="icon-action thank-btn" title="Enviar agradecimiento"><i class="fas fa-heart"></i></button> </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="clients" class="page">
+                 <div class="page-header">
+                    <h1>Gestión de Clientes</h1>
+                    <button id="add-client-page-btn" class="primary-btn"><i class="fas fa-plus"></i> Nuevo Cliente</button> </div>
+
+                <div class="filter-container">
+                    <div class="filter-group">
+                        <label for="status-filter">Estado:</label>
+                        <select id="status-filter">
+                            <option value="all">Todos</option>
+                            <option value="active">Activos</option>
+                            <option value="inactive">Inactivos</option>
+                            <option value="pending">Con pagos pendientes</option>
+                            <option value="overdue">Con pagos atrasados</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="service-filter">Servicio:</label>
+                        <select id="service-filter">
+                            <option value="all">Todos</option>
+                            <option value="gps">Monitoreo GPS</option>
+                            <option value="maintenance">Mantenimiento</option>
+                            <option value="consulting">Consultoría</option>
+                            <option value="other">Otros</option>
+                        </select>
+                    </div>
+                    <div class="search-filter">
+                        <input type="text" placeholder="Buscar cliente..." id="client-search">
+                        <button id="search-client-btn"><i class="fas fa-search"></i></button> </div>
+                </div>
+
+                <div class="clients-grid">
+                    <div class="client-card">
+                        <div class="client-card-header">
+                            <div class="client-avatar">T</div>
+                            <div class="client-status overdue">Atrasado</div>
+                        </div>
+                        <div class="client-card-content">
+                            <h3>Transportes San Mateo</h3>
+                            <p><i class="fas fa-phone"></i> +51 949205558</p>
+                            <p><i class="fas fa-envelope"></i> info@transportesanmateo.com</p>
+                            <div class="client-services">
+                                <span class="service-tag">Monitoreo GPS</span>
+                            </div>
+                        </div>
+                        <div class="client-card-footer">
+                            <div class="payment-summary">
+                                </div>
+                            <div class="client-actions">
+                                 <button class="client-action-btn" title="Ver historial"><i class="fas fa-history"></i></button> <button class="client-action-btn edit-btn" title="Editar cliente"><i class="fas fa-edit"></i></button> <button class="client-action-btn remind-btn" title="Enviar recordatorio"><i class="fab fa-whatsapp"></i></button> </div>
+                        </div>
+                    </div>
+                     <div class="client-card">
+                        <div class="client-card-header">
+                            <div class="client-avatar">C</div>
+                            <div class="client-status active">Al día</div>
+                        </div>
+                         <div class="client-card-content">
+                            <h3>Comercial Andina</h3>
+                            <p><i class="fas fa-phone"></i> +51 945678123</p>
+                            <p><i class="fas fa-envelope"></i> ventas@comercialandina.com</p>
+                             <div class="client-services">
+                                <span class="service-tag">Monitoreo GPS</span>
+                                <span class="service-tag">Mantenimiento</span>
+                            </div>
+                        </div>
+                         <div class="client-card-footer">
+                            <div class="payment-summary">
+                                </div>
+                             <div class="client-actions">
+                                 <button class="client-action-btn" title="Ver historial"><i class="fas fa-history"></i></button> <button class="client-action-btn edit-btn" title="Editar cliente"><i class="fas fa-edit"></i></button> <button class="client-action-btn receipt-btn" title="Generar factura"><i class="fas fa-file-invoice"></i></button> </div>
+                        </div>
+                    </div>
+                    </div>
+
+                <div class="pagination">
+                    <button class="pagination-btn" disabled><i class="fas fa-chevron-left"></i></button>
+                     <button class="pagination-btn active">1</button>
+                     <button class="pagination-btn">2</button>
+                     <button class="pagination-btn">3</button>
+                     <span class="pagination-ellipsis">...</span>
+                     <button class="pagination-btn">10</button>
+                     <button class="pagination-btn"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </section>
+
+            <section id="payments" class="page">
+                 <div class="page-header">
+                    <h1>Gestión de Cobros</h1>
+                    <button id="add-payment-btn" class="primary-btn"><i class="fas fa-plus"></i> Nuevo Cobro</button> </div>
+
+                <div class="filter-container">
+                    <div class="filter-group">
+                        <label for="payment-status-filter">Estado:</label>
+                        <select id="payment-status-filter">
+                            <option value="all">Todos</option>
+                            <option value="paid">Pagados</option>
+                            <option value="pending">Pendientes</option>
+                            <option value="overdue">Atrasados</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="payment-date-filter">Período:</label>
+                        <select id="payment-date-filter">
+                            <option value="all">Todos</option>
+                            <option value="current-month">Este mes</option>
+                            <option value="previous-month">Mes anterior</option>
+                            <option value="custom">Personalizado</option>
+                        </select>
+                    </div>
+                    <div class="filter-group" id="date-range-filter" style="display: none;">
+                        <input type="date" id="date-from">
+                        <span>a</span>
+                        <input type="date" id="date-to">
+                        <button id="apply-date-filter" class="secondary-btn">Aplicar</button> </div>
+                </div>
+
+                <div class="table-container">
+                    <table class="payments-table">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" id="select-all-payments"></th>
+                                <th>Cliente</th>
+                                <th>Servicio</th>
+                                <th>Emisión</th>
+                                <th>Vencimiento</th>
+                                <th>Monto</th>
+                                <th>Estado</th>
+                                <th>Atraso</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="checkbox" class="payment-checkbox"></td>
+                                <td>
+                                    <div class="client-info">
+                                        <div class="client-initial">T</div>
+                                        <span>Transportes San Mateo</span>
+                                    </div>
+                                </td>
+                                <td>Monitoreo GPS</td>
+                                <td>01/03/2025</td>
+                                <td>20/03/2025</td>
+                                <td>S/1,600.00</td>
+                                <td><span class="status-badge overdue">Atrasado</span></td>
+                                <td><span class="delay-days">18 días</span></td>
+                                <td>
+                                    <div class="action-buttons">
+                                         <button class="icon-action view-btn" title="Ver detalles"><i class="fas fa-eye"></i></button> <button class="icon-action remind-btn" title="Enviar recordatorio"><i class="fab fa-whatsapp"></i></button> <button class="icon-action edit-btn" title="Editar"><i class="fas fa-edit"></i></button> <button class="icon-action receipt-btn" title="Generar recibo"><i class="fas fa-file-invoice"></i></button> </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                    </table>
+                </div>
+
+                <div class="bulk-actions">
+                    <span class="selected-count">0 seleccionados</span>
+                     <button class="secondary-btn bulk-action-btn bulk-remind-btn" disabled><i class="fab fa-whatsapp"></i> Enviar recordatorio</button> <button class="secondary-btn bulk-action-btn bulk-receipt-btn" disabled><i class="fas fa-file-invoice"></i> Generar recibos</button> </div>
+
+                <div class="pagination">
+                   <button class="pagination-btn" disabled><i class="fas fa-chevron-left"></i></button>
+                     <button class="pagination-btn active">1</button>
+                     <button class="pagination-btn">2</button>
+                     <button class="pagination-btn">3</button>
+                     <span class="pagination-ellipsis">...</span>
+                     <button class="pagination-btn">10</button>
+                     <button class="pagination-btn"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </section>
+            
+            <!-- Nueva sección de Servicios -->
+            <section id="services" class="page">
+                <div class="page-header">
+                    <h1>Gestión de Servicios</h1>
+                    <button id="add-service-btn" class="primary-btn"><i class="fas fa-plus"></i> Nuevo Servicio</button>
+                </div>
+
+                <div class="filter-container">
+                    <div class="filter-group">
+                        <label for="service-price-filter">Precio:</label>
+                        <select id="service-price-filter">
+                            <option value="all">Todos los precios</option>
+                            <option value="under-500">Menos de S/500</option>
+                            <option value="500-1000">S/500 - S/1000</option>
+                            <option value="1000-2000">S/1000 - S/2000</option>
+                            <option value="over-2000">Más de S/2000</option>
+                        </select>
+                    </div>
+                    <div class="search-filter">
+                        <input type="text" placeholder="Buscar servicio..." id="service-search">
+                        <button id="search-service-btn"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table class="services-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Descripción</th>
+                                <th>Precio Base</th>
+                                <th>Estadísticas</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Los servicios se cargarán dinámicamente aquí -->
+                            <tr>
+                                <td colspan="6" class="center-text">Cargando servicios...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pagination">
+                    <button class="pagination-btn" disabled><i class="fas fa-chevron-left"></i></button>
+                    <button class="pagination-btn active">1</button>
+                    <button class="pagination-btn">2</button>
+                    <button class="pagination-btn">3</button>
+                    <span class="pagination-ellipsis">...</span>
+                    <button class="pagination-btn">10</button>
+                    <button class="pagination-btn"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </section>
+
+            <section id="reports" class="page">
+                 <div class="page-header">
+                    <h1>Reportes y Estadísticas</h1>
+                    <div class="report-actions">
+                         <button id="print-report-btn" class="secondary-btn"><i class="fas fa-print"></i> Imprimir</button> <button id="export-report-btn" class="secondary-btn"><i class="fas fa-file-export"></i> Exportar</button> </div>
+                </div>
+
+                <div class="report-filters">
+                    <div class="filter-group">
+                        <label for="report-type">Tipo de Reporte:</label>
+                        <select id="report-type">
+                            <option value="payment-summary">Resumen de Pagos</option>
+                            <option value="client-status">Estado de Clientes</option>
+                            <option value="delay-analysis">Análisis de Atrasos</option>
+                            <option value="revenue-forecast">Proyección de Ingresos</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="report-period">Período:</label>
+                        <select id="report-period">
+                            <option value="current-month">Mes actual</option>
+                            <option value="previous-month">Mes anterior</option>
+                            <option value="quarter">Trimestre</option>
+                            <option value="year">Año</option>
+                        </select>
+                    </div>
+                    <button id="generate-report-btn" class="primary-btn">Generar Reporte</button> </div>
+
+                <div class="report-content">
+                    <div class="report-section">
+                        <h2>Resumen de Pagos</h2>
+                        <div class="charts-container">
+                            </div>
+                    </div>
+                     <div class="report-section">
+                        <h2>Análisis de Atrasos</h2>
+                         <div class="charts-container">
+                            </div>
+                    </div>
+                     <div class="table-container">
+                        <h3>Detalle de Atrasos por Cliente</h3>
+                        <table class="report-table">
+                           </table>
+                    </div>
+                </div>
+            </section>
+
+            <section id="settings" class="page">
+                <div class="page-header">
+                    <h1>Configuración del Sistema</h1>
+                </div>
+
+                <div class="settings-container">
+                    <div class="settings-sidebar">
+                        <ul class="settings-menu">
+                            <li class="active" data-settings="general">General</li>
+                            <li data-settings="users" class="admin-only">Usuarios</li> <li data-settings="notifications">Notificaciones</li>
+                            <li data-settings="billing">Facturación</li>
+                            <li data-settings="whatsapp">WhatsApp</li>
+                            <li data-settings="backup">Respaldo</li>
+                        </ul>
+                    </div>
+
+                    <div class="settings-content">
+                        <div id="general-settings" class="settings-panel active">
+                            <h2>Configuración General</h2>
+                            <form class="settings-form" id="general-settings-form"> <div class="form-actions">
+                                     <button type="submit" class="primary-btn">Guardar Cambios</button> <button type="reset" class="secondary-btn">Cancelar</button> </div>
+                            </form>
+                        </div>
+
+                        <div id="users-settings" class="settings-panel admin-only">
+                            <h2>Gestión de Usuarios</h2>
+                            <button class="primary-btn admin-only" id="add-user-btn"><i class="fas fa-plus"></i> Nuevo Usuario</button>
+                            <div class="table-container">
+                                <table class="settings-table">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Usuario</th>
+                                            <th>Correo</th>
+                                            <th>Nombre Completo</th>
+                                            <th>Rol</th>
+                                            <th>Estado</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td colspan="7" class="center-text">Cargando usuarios...</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                         <div id="notifications-settings" class="settings-panel">
+                            <h2>Configuración de Notificaciones</h2>
+                            <form class="settings-form" id="notifications-settings-form"> <div class="form-actions">
+                                     <button type="submit" class="primary-btn">Guardar Cambios</button> <button type="reset" class="secondary-btn">Restaurar Valores</button> </div>
+                            </form>
+                        </div>
+
+                         <div id="billing-settings" class="settings-panel">
+                             <h2>Configuración de Facturación</h2>
+                             <form class="settings-form" id="billing-settings-form"> <div class="form-actions">
+                                     <button type="submit" class="primary-btn">Guardar Cambios</button> <button type="reset" class="secondary-btn">Cancelar</button> </div>
+                            </form>
+                        </div>
+
+                         <div id="whatsapp-settings" class="settings-panel">
+                            <h2>Configuración de WhatsApp</h2>
+                             <div class="whatsapp-connection-status connected"> <i class="fab fa-whatsapp"></i>
+                                <div>
+                                    <h3 id="whatsapp-status-title">WhatsApp Conectado</h3>
+                                    <p id="whatsapp-status-number">+51 987654321</p>
+                                </div>
+                                 <button id="whatsapp-connect-btn" class="primary-btn" style="display: none;">Conectar</button> <button id="whatsapp-disconnect-btn" class="secondary-btn">Desconectar</button> </div>
+                             <form class="settings-form" id="whatsapp-settings-form"> <div class="form-actions">
+                                     <button type="submit" class="primary-btn">Guardar Cambios</button> <button type="reset" class="secondary-btn">Cancelar</button> </div>
+                            </form>
+                        </div>
+
+                         <div id="backup-settings" class="settings-panel">
+                            <h2>Respaldo de Datos</h2>
+                             <div class="backup-status">
+                                <div class="backup-info">
+                                   </div>
+                                 <button id="create-backup-btn" class="primary-btn"><i class="fas fa-sync-alt"></i> Crear Respaldo</button> </div>
+                             <form class="settings-form" id="backup-settings-form"> <div class="form-section">
+                                    <h3>Respaldos Disponibles</h3>
+                                    <div class="backup-list">
+                                         <div class="backup-item">
+                                            <div class="backup-item-actions">
+                                                 <button class="icon-action download-backup-btn" title="Descargar"><i class="fas fa-download"></i></button> <button class="icon-action restore-backup-btn" title="Restaurar"><i class="fas fa-undo"></i></button> <button class="icon-action delete-btn delete-backup-btn" title="Eliminar"><i class="fas fa-trash"></i></button> </div>
+                                        </div>
+                                        </div>
+                                </div>
+                                <div class="form-actions">
+                                     <button type="submit" class="primary-btn">Guardar Cambios</button> <button type="reset" class="secondary-btn">Cancelar</button> </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div class="modal" id="add-client-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Agregar Nuevo Cliente</h2>
+                <button class="close-modal"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="add-client-form">
+                    <!-- Los campos del formulario se añadirán dinámicamente -->
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="secondary-btn" id="cancel-add-client">Cancelar</button>
+                <button class="primary-btn" id="save-add-client">Guardar Cliente</button>
+            </div>
+        </div>
+    </div>
+
+     <div class="modal" id="add-payment-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Registrar Nuevo Cobro</h2>
+                <button class="close-modal"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                 <form id="add-payment-form">
+                     </form>
+            </div>
+             <div class="modal-footer">
+                 <button class="secondary-btn" id="cancel-add-payment">Cancelar</button>
+                 <button class="primary-btn" id="save-add-payment">Registrar Cobro</button> </div>
+        </div>
+    </div>
+
+    <div class="modal" id="receipt-modal">
+        <div class="modal-content receipt-modal-content">
+            <div class="modal-header">
+                <h2>Recibo de Pago</h2>
+                <div class="modal-header-actions">
+                     <button class="icon-btn" id="print-receipt"><i class="fas fa-print"></i></button> <button class="icon-btn" id="download-receipt"><i class="fas fa-download"></i></button> <button class="icon-btn" id="share-receipt"><i class="fas fa-share-alt"></i></button> <button class="close-modal"><i class="fas fa-times"></i></button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="receipt-container" id="receipt-preview">
+                    <div class="receipt-header">
+                         <div class="receipt-logo">
+                            <img src="/img/logo.svg" alt="PEGASUS Logo" id="receipt-logo-img">
+                        </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button class="secondary-btn" id="close-receipt">Cerrar</button>
+                <button class="primary-btn" id="send-receipt-whatsapp"><i class="fab fa-whatsapp"></i> Enviar por WhatsApp</button> </div>
+        </div>
+    </div>
+
+    <div class="modal" id="notification-modal">
+        <div class="modal-content notification-modal-content">
+            <div class="modal-header">
+                <h2>Enviar Recordatorio</h2>
+                <button class="close-modal"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+               </div>
+            <div class="modal-footer">
+                 <button class="secondary-btn" id="cancel-notification">Cancelar</button>
+                 <button class="primary-btn" id="send-notification-whatsapp"><i class="fab fa-whatsapp"></i> Enviar por WhatsApp</button> </div>
+        </div>
+    </div>
+    
+    <!-- Modal para agregar/editar servicios -->
+    <div class="modal" id="service-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Agregar Nuevo Servicio</h2>
+                <button class="close-modal"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="service-form">
+                    <div class="form-group">
+                        <label for="service-name">Nombre del Servicio <span class="required">*</span></label>
+                        <input type="text" id="service-name" name="nombre_servicio" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="service-price">Precio Base <span class="required">*</span></label>
+                        <input type="number" id="service-price" name="precio_base" step="0.01" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="service-description">Descripción</label>
+                        <textarea id="service-description" name="descripcion" rows="3"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="secondary-btn" id="cancel-service">Cancelar</button>
+                <button class="primary-btn" id="save-service">Guardar Servicio</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para ver estadísticas de servicio -->
+    <div class="modal" id="service-stats-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Estadísticas del Servicio</h2>
+                <button class="close-modal"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="service-stats-container">
+                    <div class="service-info">
+                        <h3 id="stats-service-name">Nombre del Servicio</h3>
+                        <p id="stats-service-description">Descripción del servicio</p>
+                        <p><strong>Precio Base:</strong> <span id="stats-service-price">S/0.00</span></p>
+                    </div>
+
+                    <div class="stats-container">
+                        <div class="stat-card">
+                            <div class="stat-icon clients-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-details">
+                                <h3>Clientes</h3>
+                                <p class="stat-value" id="stats-service-clients">0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon payments-icon">
+                                <i class="fas fa-file-invoice"></i>
+                            </div>
+                            <div class="stat-details">
+                                <h3>Total Cobros</h3>
+                                <p class="stat-value" id="stats-service-cobros">0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon money-icon">
+                                <i class="fas fa-money-bill-wave"></i>
+                            </div>
+                            <div class="stat-details">
+                                <h3>Monto Total</h3>
+                                <p class="stat-value" id="stats-service-monto">S/0.00</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stats-details">
+                        <h3>Detalles</h3>
+                        <div class="stats-item">
+                            <span class="stats-label">Cobros Pagados:</span>
+                            <span class="stats-value" id="stats-service-pagados">0</span>
+                        </div>
+                        <div class="stats-item">
+                            <span class="stats-label">Cobros Pendientes:</span>
+                            <span class="stats-value" id="stats-service-pendientes">0</span>
+                        </div>
+                        <div class="stats-item">
+                            <span class="stats-label">Cobros Atrasados:</span>
+                            <span class="stats-value" id="stats-service-atrasados">0</span>
+                        </div>
+                        <div class="stats-item">
+                            <span class="stats-label">Porcentaje Cobrado:</span>
+                            <span class="stats-value" id="stats-service-porcentaje">0%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="secondary-btn" id="close-service-stats">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- Scripts -->
+    <script type="module" src="/js/main.js"></script>
+</body>
+</html>
